@@ -1,3 +1,6 @@
+from gestor import agregar_tarea, listar_tareas
+# reemplaza tareas.append(...) por agregar_tarea(tareas, titulo)
+# reemplaza '\n'.join(...) por '\n'.join(listar_tareas(tareas))
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.textinput import TextInput
@@ -22,8 +25,8 @@ class ToDoApp(App):
     def agregar_tarea(self, instance):
         titulo = self.input.text
         if titulo:
-            tareas.append({"titulo": titulo, "estado": "pendiente"})
-            self.resultado.text = '\n'.join([f"{t['titulo']} - {t['estado']}" for t in tareas])
+            agregar_tarea(tareas, titulo)
+            self.resultado.text = '\n'.join(listar_tareas(tareas))
             self.input.text = ''
 
 ToDoApp().run()
