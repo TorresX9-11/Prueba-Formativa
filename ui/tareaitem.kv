@@ -1,0 +1,23 @@
+# ui/tareaitem.kv
+
+<TareaItem>:
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: 40
+    Label:
+        text: root.titulo + " - " + root.estado
+    Button:
+        text: "✅Confirmar Tarea"
+        on_press: root.completar()
+    Button:
+        text: "🗑️Borrar Tarea"
+        on_press: root.eliminar()
+
+<TareasView>:
+    viewclass: 'TareaItem'
+    RecycleBoxLayout:
+        orientation: 'vertical'
+        default_size: None, 40
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height

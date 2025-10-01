@@ -1,32 +1,52 @@
-from gestor import agregar_tarea, listar_tareas
-# reemplaza tareas.append(...) por agregar_tarea(tareas, titulo)
-# reemplaza '\n'.join(...) por '\n'.join(listar_tareas(tareas))
+# app.py
+
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
+from ui.tareaitem import TareasView
+from gestor.db import insertar_tarea
+from kivy.lang import Builder
+from kivy.clock import Clock
+from ui.tareaitem import TareaItem
 from kivy.uix.label import Label
+Builder.load_file("ui/tareaitem.kv")
 
-tareas = []
+
 
 class ToDoApp(App):
     def build(self):
-        self.layout = BoxLayout(orientation='vertical')
-        self.input = TextInput(hint_text='Escribe una tarea')
-        self.boton = Button(text='Agregar tarea')
-        self.boton.bind(on_press=self.agregar_tarea)
-        self.resultado = Label(text='')
+        root = BoxLayout(orientation='vertical')
+        entrada = BoxLayout(size_hint_y=None, height=50)
+        self.input = TextInput(hint_text='Nueva tarea')
+        boton = Button(text='Agregar')
+        boton.bind(on_press=self.agregar_tarea)
+        entrada.add_widget(self.input)
+        entrada.add_widget(boton)
 
-        self.layout.add_widget(self.input)
-        self.layout.add_widget(self.boton)
-        self.layout.add_widget(self.resultado)
-        return self.layout
+        self.lista = TareasView()
+        self.mensaje = Label(text="", size_hint_y=None, height=30)
+
+        root.add_widget(entrada)
+        root.add_widget(self.mensaje)
+        root.add_widget(self.lista)
+        return root
 
     def agregar_tarea(self, instance):
-        titulo = self.input.text
+        titulo = self.input.text.strip()
         if titulo:
-            agregar_tarea(tareas, titulo)
-            self.resultado.text = '\n'.join(listar_tareas(tareas))
+            insertar_tarea(titulo)
             self.input.text = ''
+            self.lista.actualizar_lista()
+            self.mostrar_mensaje("✅ Tarea creada correctamente")
 
-ToDoApp().run()
+    def mostrar_mensaje(self, texto):
+        self.mensaje.text = texto
+        Clock.schedule_once(lambda dt: self.limpiar_mensaje(), 2.5)
+
+    def limpiar_mensaje(self):
+        self.mensaje.text = ""
+
+
+if __name__ == "__main__":
+    ToDoApp().run()

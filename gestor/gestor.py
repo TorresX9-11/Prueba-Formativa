@@ -1,3 +1,5 @@
+from gestor.modelos import Tarea
+
 def agregar_tarea(lista, titulo):
     lista.append({"titulo": titulo, "estado": "pendiente"})
 
