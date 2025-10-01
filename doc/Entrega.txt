@@ -1,0 +1,13 @@
+Entrega de la actividad práctica: App To-Do con SQLite
+
+Enlace al repositorio GitHub: https://github.com/TorresX9-11/Prueba-Formativa.git
+
+Esta entrega incluye:
+- Código fuente completo de la app (main.py, app.py, gestor/, ui/).
+- Base de datos SQLite (data/tareas.db) 
+- Capturas de pantalla:
+  - Base de datos con tareas registradas (assets/screenshots/bd_tareas.png).
+  - Manipulación de tareas en la app (assets/screenshots/edicion_eliminacion.png).
+
+La aplicación permite agregar, consultar, completar y eliminar tareas desde una interfaz gráfica construida con Kivy, con 
+persistencia en SQLite. El código está modularizado y documentado para facilitar su comprensión y extensión.
